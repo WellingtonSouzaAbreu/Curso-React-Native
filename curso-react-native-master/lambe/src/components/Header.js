@@ -49,13 +49,13 @@ const styles = StyleSheet.create({
     image: {
         height: 30,
         width: 30,
-        resizeMode: 'contain'
+        resizeMode: 'contain',
     },
     title: {
-        color: '#000',
-        fontFamily: 'shelter',
+        color: 'black',
         height: 30,
-        fontSize: 28
+        fontSize: 28,
+        fontFamily: 'shelter',
     },
     userContainer: {
         flexDirection: 'row',
