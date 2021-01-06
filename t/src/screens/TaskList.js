@@ -4,12 +4,13 @@ import moment from 'moment'
 import 'moment/locale/pt-br'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-import { server, showError } from './../common.js'
+import * as Font from 'expo-font'
 
 import Icon from 'react-native-vector-icons/FontAwesome'
 import Task from './../components/Task.js'
 import AddTask from './AddTask.js'
 
+import { server, showError } from './../common.js'
 import todayImage from './../../assets/imgs/today.jpg'
 import tomorrowImage from './../../assets/imgs/tomorrow.jpg'
 import weekImage from './../../assets/imgs/week.jpg'
@@ -28,6 +29,9 @@ export default class TaskList extends Component {
     state = { ...initialState }
 
     componentDidMount = async () => {
+
+        await Font.loadAsync({ 'Lato': require('./../../assets/fonts/Lato.ttf') })
+
         const stateString = await AsyncStorage.getItem('tasksState') || null
         const savedState = JSON.parse(stateString) || initialState
 
@@ -101,7 +105,7 @@ export default class TaskList extends Component {
     }
 
     getImage = () => {
-        switch(this.props.daysAhead){
+        switch (this.props.daysAhead) {
             case 0: return todayImage
             case 1: return tomorrowImage
             case 7: return weekImage
@@ -110,7 +114,7 @@ export default class TaskList extends Component {
     }
 
     getColor = () => {
-        switch(this.props.daysAhead){
+        switch (this.props.daysAhead) {
             case 0: return commonStyles.colors.today
             case 1: return commonStyles.colors.tomorrow
             case 7: return commonStyles.colors.week
@@ -147,7 +151,7 @@ export default class TaskList extends Component {
                             keyExtractor={item => `${item.id}`}
                             renderItem={({ item }) => <Task {...item} onToggleTask={this.toggleTask} onDelete={this.deleteTask} />} />
                     </View>
-                    <TouchableOpacity style={[styles.addButton, {backgroundColor: this.getColor()}]}
+                    <TouchableOpacity style={[styles.addButton, { backgroundColor: this.getColor() }]}
                         activeOpacity={0.7}
                         onPress={() => this.setState({ showAddTask: true })}>
                         <Icon name="plus" size={20} color={commonStyles.colors.secondary} />
@@ -173,14 +177,14 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end'
     },
     title: {
-        fontFamily: commonStyles.fontFamily,
+        fontFamily: 'lato',
         fontSize: 50,
         color: commonStyles.colors.secondary,
         marginLeft: 20,
         marginBottom: 20
     },
     subtitle: {
-        fontFamily: commonStyles.fontFamily,
+        fontFamily: 'lato',
         fontSize: 20,
         color: commonStyles.colors.secondary,
         marginLeft: 30,

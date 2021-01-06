@@ -15,7 +15,7 @@ class Header extends Component {
 
     async componentDidMount() { // Teste de inserção de fonte
         await Font.loadAsync({
-            'lato': require('./assets/fonts/shelter.otf'),
+            'Shelter': require('./../../assets/fonts/shelter.otf'),
         });
     }
     
@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
         marginTop: Platform.OS === 'ios' ? 0 : 20,
         padding: 10,
         borderBottomWidth: 1,
-        borderColor: '#000'
+        borderColor: '#BBB',
+        width: '100%'
     },
     rowContainer: {
         flexDirection: 'row',
@@ -49,7 +50,7 @@ const styles = StyleSheet.create({
     },
     title: {
         color: '#000',
-        fontFamily: 'shelter',
+        fontFamily: 'Shelter',
         height: 30,
         fontSize: 28
     }
