@@ -1,7 +1,11 @@
 import React, { Component } from 'react'
+import {connect} from 'react-redux'
 import { View, Text, StyleSheet, TouchableOpacity, TextInput } from 'react-native'
 
+import {login} from '../store/actions/user.js'
+
 const initialState = {
+    name: 'Temp',
     email: '',
     password: ''
 }
@@ -10,6 +14,7 @@ class Login extends Component {
     state = { ...initialState }
 
     login = () => {
+        this.props.onLogin({...this.state})
         this.props.navigation.navigate('Profile')
     }
 
@@ -17,11 +22,11 @@ class Login extends Component {
         return (
             <View style={styles.container}>
                 <TextInput placeholder='Email' style={styles.input}
-                    autoFocus={true} keyboardType='email-address'
+                    /* autoFocus={true} */ keyboardType='email-address'
                     value={this.state.email} onChangeText={email => this.setState({ email })}>
                 </TextInput>
                 <TextInput placeholder='Senha' style={styles.input}
-                    autoFocus={true} secureTextEntry={true}
+                    /* autoFocus={true} */ secureTextEntry={true}
                     value={this.state.password} onChangeText={password => this.setState({ password })}>
                 </TextInput>
                 <TouchableOpacity onPress={this.login} style={styles.button}>
@@ -35,7 +40,13 @@ class Login extends Component {
     }
 }
 
-export default Login
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: user => dispatch(login(user))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(Login)
 
 const styles = StyleSheet.create({
     container: {

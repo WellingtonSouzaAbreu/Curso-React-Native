@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import { StyleSheet, FlatList, View } from 'react-native'
+import { connect } from 'react-redux'
 
 import Header from './../components/Header.js'
 import Post from './../components/Post.js'
 
-const initialState = {
+/* const initialState = {
     posts: [
         {
             id: Math.random(),
@@ -30,17 +31,16 @@ const initialState = {
             comments: []
         }
     ]
-}
-class Feed extends Component {
+} */
 
-    state = { ...initialState }
+class Feed extends Component {
 
     render() {
         return (
             <View style={styles.container}>
                 <Header />
                 <FlatList
-                    data={this.state.posts}
+                    data={this.props.posts}
                     keyExtractor={item => `${item.id}`}
                     renderItem={({ item }) => <Post key={item.id} {...item} />
                     }
@@ -50,7 +50,13 @@ class Feed extends Component {
     }
 }
 
-export default Feed
+const mapStateToProps = ({ posts }) => {
+    return {
+        posts: posts.posts
+    }
+}
+
+export default connect(mapStateToProps)(Feed)
 
 const styles = StyleSheet.create({
     container: {

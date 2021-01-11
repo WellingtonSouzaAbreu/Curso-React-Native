@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import ImagePicker  from 'expo';
+import ImagePicker from 'expo';
 import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Image, Dimensions, Platform, ScrollView, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { connect } from 'react-redux'
+import { addPost } from '../store/actions/posts.js'
 
 import Header from '../components/Header'
 
@@ -39,7 +41,19 @@ class AddPhoto extends Component {
     }
 
     save = async () => {
-        Alert.alert('Imagem Postada:', this.state.comment)
+        this.props.onAddPost({
+            id: Math.random(),
+            nickname: this.props.name,
+            email: this.props.email,
+            image: this.state.image,
+            comments: [{
+                nickname: this.props.name,
+                comment: this.state.comment
+            }]
+        })
+
+        this.setState({ image: null, comment: '' })
+        this.props.navigation.navigate('Feed')
     }
 
     render() {
@@ -90,7 +104,20 @@ class AddPhoto extends Component {
     }
 }
 
-export default AddPhoto
+const mapStateToProps = ({ user }) => {
+    return {
+        email: user.email,
+        name: user.name
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        onAddPost: post => dispatch(addPost(post))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPhoto)
 
 const styles = StyleSheet.create({
     container: {
