@@ -2,6 +2,7 @@ import React from 'react'
 import { createBottomTabNavigator, createSwitchNavigator, createStackNavigator } from 'react-navigation'
 import Icon from 'react-native-vector-icons/FontAwesome'
 
+import Splash from './screens/Splash.js'
 import Feed from './screens/Feed.js'
 import AddPhoto from './screens/AddPhoto.js'
 import Profile from './screens/Profile.js'
@@ -61,4 +62,9 @@ const menuConfig = {
 
 const MenuNavigator = createBottomTabNavigator(menuRoutes, menuConfig)
 
-export default MenuNavigator
+const splashRouter = createSwitchNavigator({
+    Splash: Splash,
+    App: MenuNavigator
+}, {initialRouteName: 'Splash'})
+
+export default splashRouter 

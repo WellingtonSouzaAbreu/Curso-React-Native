@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ImagePicker from 'expo';
+import * as ImagePicker from 'expo-image-picker';
 import { View, Text, StyleSheet, TouchableOpacity, TouchableHighlight, TextInput, Image, Dimensions, Platform, ScrollView, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
@@ -8,6 +8,7 @@ import { addPost } from '../store/actions/posts.js'
 
 import Header from '../components/Header'
 
+const noUser = 'Você precisa estar logado para adicionar imagens'
 class AddPhoto extends Component {
     state = {
         image: null,
@@ -15,6 +16,11 @@ class AddPhoto extends Component {
     }
 
     pickLocalImage = async () => {
+        if(!this.props.name){
+            Alert.alert('Falha!', noUser)
+            return
+        }
+
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -28,6 +34,11 @@ class AddPhoto extends Component {
     }
 
     pickCameraImage = async () => {
+        if(!this.props.name){
+            Alert.alert('Falha!', noUser)
+            return
+        }
+
         let result = await ImagePicker.launchCameraAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
@@ -71,7 +82,8 @@ class AddPhoto extends Component {
                         </View>
                         <TextInput placeholder='commentario da foto?...'
                             style={styles.input} value={this.state.comment}
-                            onChangeText={comment => this.setState({ comment })}>
+                            onChangeText={comment => this.setState({ comment })}
+                            editable={this.props.name != null}>
                         </TextInput>
                         <View style={styles.choicesContainer}>
                             <Text style={styles.butttomText}>Escolha uma foto</Text>

@@ -2,7 +2,7 @@ import { ADD_POST, ADD_COMMENT } from '../actions/actionTypes.js'
 
 const initialState = {
     posts: [
-        {
+        /* {
             id: Math.random(),
             nickname: 'Rafael Pereira Filho',
             email: 'rafaelprrf@gmail.com',
@@ -24,7 +24,7 @@ const initialState = {
             email: 'kfinha@gmail.com',
             image: require('./../../../assets/imgs/bw.jpg'),
             comments: []
-        }
+        } */
     ]
 }
 
